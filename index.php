@@ -47,7 +47,7 @@ if (!empty($_POST['email'])) {
     if (!$mail->send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     } else {
-        echo json_response(200, "Message Sent")
+        echo json_response(200, "Message Sent");
     }
     $output = ['email' => $_POST['email']];
     echo $post_string = json_encode($output);
