@@ -38,11 +38,10 @@ if (!empty($_POST['email'])) {
     $mail->addAddress($_POST['send-to-address'], $_POST['send-to-name']);
     //Set the subject line
     $mail->Subject = $_POST['subject'];
-    //Read an HTML message body from an external file, convert referenced images to embedded,
-    //convert HTML into a basic plain-text alternative body
-    $mail->Body = $_POST['text'];
+    $body = is_array($_POST['text']) ? join(' ', $_POST['text']) : $_POST['text'];
+    $mail->Body = $body;
     //Replace the plain text body with one created manually
-    $mail->AltBody = is_array($_POST['text']) ? join(' ', $_POST['text']) : $_POST['text'];
+    $mail->AltBody = $body;
     //send the message, check for errors
     if (!$mail->send()) {
         header("HTTP/1.0 412 Precondition Failed", true, 412);
