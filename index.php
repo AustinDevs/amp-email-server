@@ -45,12 +45,11 @@ if (!empty($_POST['email'])) {
     $mail->AltBody = $_POST['text'];
     //send the message, check for errors
     if (!$mail->send()) {
+        header("HTTP/1.0 412 Precondition Failed", true, 412);
         echo "Mailer Error: " . $mail->ErrorInfo;
     } else {
-        echo json_response(200, "Message Sent");
+        echo json_encode("Message Sent");
     }
-    $output = ['email' => $_POST['email']];
-    echo $post_string = json_encode($output);
     exit;
 } else {
     echo json_encode("pong");
