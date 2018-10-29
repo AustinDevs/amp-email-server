@@ -42,7 +42,7 @@ if (!empty($_POST['email'])) {
     //convert HTML into a basic plain-text alternative body
     $mail->Body = $_POST['text'];
     //Replace the plain text body with one created manually
-    $mail->AltBody = is_array($_POST['text']) ? print_r($_POST['text'], false) : $_POST['text'];
+    $mail->AltBody = is_array($_POST['text']) ? join(' ', $_POST['text']) : $_POST['text'];
     //send the message, check for errors
     if (!$mail->send()) {
         header("HTTP/1.0 412 Precondition Failed", true, 412);
