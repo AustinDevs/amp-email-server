@@ -10,21 +10,6 @@ header("Content-type: application/json");
 header("access-control-allow-methods:POST, GET, OPTIONS");
 header("access-control-allow-headers:Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token");
 
-//IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
-//Function to call which uses the PHP imap_*() functions to save messages: https://php.net/manual/en/book.imap.php
-//You can use imap_getmailboxes($imapStream, '/imap/ssl') to get a list of available folders or labels, this can
-//be useful if you are trying to get this working on a non-Gmail IMAP server.
-function save_mail($mail)
-{
-    //You can change 'Sent Mail' to any other folder or tag
-    $path = "{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail";
-    //Tell your server to open an IMAP connection using the same username and password as you used for SMTP
-    $imapStream = imap_open($path, $mail->Username, $mail->Password);
-    $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-    imap_close($imapStream);
-    return $result;
-}
-
 if (!empty($_POST['email'])) {
     // SUCCESSFUL
     header("Access-Control-Expose-Headers: AMP-Access-Control-Allow-Source-Origin");
@@ -63,11 +48,6 @@ if (!empty($_POST['email'])) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     } else {
         echo "Message sent!";
-        //Section 2: IMAP
-        //Uncomment these to save your message in the 'Sent Mail' folder.
-        if (save_mail($mail)) {
-            echo "Message saved!";
-        }
     }
     $output = ['email' => $_POST['email']];
     echo $post_string = json_encode($output);
