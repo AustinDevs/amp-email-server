@@ -73,9 +73,6 @@ if (!empty($_POST['email'])) {
     echo $post_string = json_encode($output);
     exit;
 } else {
-    // FAIL
-    header("HTTP/1.0 412 Precondition Failed", true, 412);
-    $output = ['msg' => 'the filed email is empty'];
-    echo $post_string = json_encode($output);
+    echo json_encode("pong");
     exit;
 }
