@@ -10,7 +10,7 @@ header("Content-type: application/json");
 header("access-control-allow-methods:POST, GET, OPTIONS");
 header("access-control-allow-headers:Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token");
 
-if (!empty($_POST['email'])) {
+if (!empty($_POST['email']) && empty($_POST['_honeypot'])) {
     // SUCCESSFUL
     header("Access-Control-Expose-Headers: AMP-Access-Control-Allow-Source-Origin");
     $email = isset($_POST['email']) ? $_POST['email'] : '';
